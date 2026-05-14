@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>EdgeOne 第一周体验报告 · v0.1</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --paper: #ffffff;
+    --ink: #1a1a1a;
+    --sub: #555;
+    --muted: #888;
+    --line: #e5e5e5;
+    --accent: #d62728;        /* EO 红 */
+    --accent-soft: #fde7e7;
+    --p0: #d62728;
+    --p1: #f59e0b;
+    --p2: #6b7280;
+    --good: #16a34a;
+    --bad: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--ink); margin: 0; padding: 40px 20px;
+    line-height: 1.7;
+  }
+  .paper {
+    max-width: 880px; margin: 0 auto; background: var(--paper);
+    padding: 56px 64px; border: 1px solid var(--line); border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  h1 { font-size: 30px; margin: 0 0 8px; letter-spacing: -0.5px; }
+  h2 { font-size: 22px; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+  h3 { font-size: 17px; margin: 28px 0 12px; color: var(--ink); }
+  h4 { font-size: 15px; margin: 20px 0 8px; color: var(--sub); }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+  .tldr {
+    background: var(--accent-soft); border-left: 4px solid var(--accent);
+    padding: 20px 24px; margin: 24px 0; border-radius: 4px;
+  }
+  .tldr h2 { border: none; margin: 0 0 12px; font-size: 18px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f5f5f5; font-weight: 600; }
+  code { background: #f5f5f5; padding: 1px 6px; border-radius: 3px; font-size: 13px; font-family: "JetBrains Mono", "SF Mono", Consolas, monospace; }
+  pre { background: #1e1e1e; color: #eaeaea; padding: 14px 18px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+  pre code { background: transparent; color: inherit; padding: 0; }
+  blockquote { border-left: 3px solid var(--accent); padding-left: 14px; color: var(--sub); margin: 16px 0; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 12px; font-weight: 600; color: white; margin-right: 4px; }
+  .p0 { background: var(--p0); }
+  .p1 { background: var(--p1); }
+  .p2 { background: var(--p2); }
+  .checklist { background: #f0fdf4; border-left: 3px solid var(--good); padding: 10px 16px; margin: 16px 0; font-size: 13px; }
+  ul, ol { padding-left: 24px; }
+  li { margin: 4px 0; }
+  .figure { margin: 28px 0; padding: 20px; background: #fcfcfc; border: 1px dashed var(--line); border-radius: 6px; }
+  .figure-caption { text-align: center; color: var(--muted); font-size: 13px; margin-top: 8px; }
+  a { color: #0969da; }
+
+  /* 卡点截图样式 */
+  .pain-point {
+    background: #fffaf3; border-left: 4px solid #f59e0b;
+    padding: 16px 20px; margin: 18px 0; border-radius: 4px;
+  }
+  .pain-point h4 { margin: 0 0 10px; color: #b45309; font-size: 15px; }
+  .pain-point ul { margin: 6px 0; }
+  .pain-point li { margin: 4px 0; }
+  .screenshot {
+    margin: 14px 0; padding: 10px; background: #f9fafb;
+    border: 1px solid var(--line); border-radius: 6px;
+  }
+  .screenshot img {
+    max-width: 100%; height: auto; display: block; margin: 0 auto;
+    border: 1px solid #e5e5e5; border-radius: 4px;
+  }
+  .screenshot-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin: 14px 0;
+  }
+  .screenshot-row .screenshot { margin: 0; }
+  .screenshot-cap {
+    text-align: center; color: var(--muted); font-size: 12px;
+    margin-top: 6px;
+  }
+  .insight {
+    background: #f0f9ff; border-left: 3px solid #0ea5e9;
+    padding: 10px 16px; margin: 12px 0; font-size: 13.5px;
+  }
+  .insight b { color: #0369a1; }
+  .right-way {
+    background: #f0fdf4; border-left: 3px solid var(--good);
+    padding: 12px 16px; margin: 12px 0;
+  }
+  .right-way h5 { margin: 0 0 8px; color: #15803d; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="paper">
+
+<h1>EdgeOne 第一周体验报告</h1>
+<div class="meta">
+作者：sowawu　·　导师：haoweichen　·　交付日期：2026-05-15　·　版本：v1.0 终稿
+</div>
+
+<h2>01　优化建议</h2>
+
+<blockquote style="font-size: 14.5px; border-left-color: var(--accent); margin: 16px 0;">
+即使在传统控制台流程内，比起翻文档解决问题，<b>我更倾向于直接问 Agent</b>。
+<div style="font-size: 12px; color: var(--muted); margin-top: 6px;">—— 本周亲跑控制台后的真实感受</div>
+</blockquote>
+
+<p>经过本周对 EdgeOne <b>Pages、Tunnel、Skill+AI、传统控制台</b>四条路径的亲跑体验，建议优化如下（详细复现路径与证据见 02 章）：</p>
+
+<table>
+<tr><th>#</th><th>问题</th><th>建议动作</th><th>P 级</th></tr>
+<tr><td>1</td><td>tunneleo 输出预期与用户预期不符</td><td>根据不同场景在官网定义不同的 prompt——目前官网的 prompt 无法覆盖所有场景</td><td><span class="badge p0">P0</span></td></tr>
+<tr><td>2</td><td>SKILL.md 缺「最终视图」</td><td>每条命令增加 "What you will see" + "Common Agent misuse"</td><td><span class="badge p0">P0</span></td></tr>
+<tr><td>3</td><td>Agent 越界推荐竞品（Skill 失败时无兜底）</td><td>Skill 里需写明<b>兜底策略</b>——完成不了的任务首先推荐用户回控制台操作</td><td><span class="badge p0">P0</span></td></tr>
+<tr><td>4</td><td>EO 文档站缺乏对 Agent 友好的结构化入口（来自 04 章 GEO）</td><td>EO 文档根目录发布 <code>llms.txt</code> + 结构化错误码 JSON 字典——这是 GEO「可发现 / 可验证」的最小起点，也是让 Agent 在调用时拿到准确入口、而不是依赖训练时的旧语料</td><td><span class="badge p0">P0</span></td></tr>
+<tr><td>5</td><td>Pages 子目录假成功</td><td>自动扫描子目录主动弹 toast；构建产物必须包含关键文件才算成功</td><td><span class="badge p1">P1</span></td></tr>
+<tr><td>6</td><td>EO Skill 的 description 与 Skill 里包含的能力不符——经了解是因为 EO Skill 与 EO Pages Skill 是<b>两个团队</b>各自做的</td><td>要么两个团队的 Skill 合作合并；要么 EO Skill 里把 Pages 相关内容删除（保持描述与实现一致）</td><td><span class="badge p1">P1</span></td></tr>
+<tr><td>7</td><td>传统控制台流程对小白门槛高——「添加站点 → 加速域名 → 源站 → DNS/CNAME → HTTPS → 缓存 → 安全防护」每一步都是专业概念，让用户自己判断"源站类型"和"接入方式"</td><td>控制台首页提供<b>按用户目标</b>的 5 类场景化路径模板：①我有 GitHub 静态项目　②我有 COS 静态网站　③我有 CVM 后端服务　④我有本地服务想临时暴露　⑤我已有线上域名想接入加速。这套模板同时写入 <code>llms.txt</code>，让 Agent 也能命中（与 04 章 GEO 联动）</td><td><span class="badge p1">P1</span></td></tr>
+</table>
+
+<h2>02　部署路径对照实验（第一手实验记录）</h2>
+<p style="color:var(--muted);font-size:13px;">本章是 01 / 03 / 04 / 05 章所有结论的证据底座。所有截图来自本周亲跑过程，未做任何美化处理。</p>
+
+<h3>2.1 实验设置</h3>
+<ul>
+<li><b>Demo 应用</b>：AI 辅助 vibe code 出来的纯静态作品集（<code>index.html</code> + 3 个项目页 + 4 张 PNG 预览图，~3 MB），无构建依赖</li>
+<li><b>代码仓库</b>：<a href="https://github.com/latrua/portfolio">github.com/latrua/portfolio</a>（HTML 在 <code>portfolio/</code> 子目录下，是后面卡点 #1 的源头）</li>
+<li><b>角色扮演</b>：完全没接触过腾讯云、CDN、DNS、备案的小白</li>
+<li><b>计时方式</b>：从「打开 EO 控制台/官网」到「拿到 URL 并能在浏览器里访问」的总用时</li>
+<li><b>公平性约束</b>：每条路径只跑一遍，不预读文档；遇到卡点先靠产品自身引导自救，超过 5 分钟才查文档</li>
+</ul>
+
+<h3>2.2 对照表</h3>
+<table>
+<tr><th>维度</th><th>Pages（控制台）</th><th>Tunnel</th><th>Skill + AI</th><th>传统控制台流程</th></tr>
+<tr><td>拿到可预览 URL 总耗时</td><td>~10 分钟</td><td>~5 分钟</td><td>未拿到</td><td>取决于源站准备进度</td></tr>
+<tr><td>让 URL 真正可分享</td><td>自定义域名 ≈ 20 分钟 + 部分区还要工信部备案</td><td>关电脑即失效（Tunnel 定位决定）</td><td>—</td><td>需备案 + DNS/CNAME + HTTPS</td></tr>
+<tr><td>操作步数</td><td>8 步（含错部署一次后重配）</td><td>4 步</td><td>多轮对话未完成</td><td>7 步（站点→域名→源站→DNS→HTTPS→缓存→安全）</td></tr>
+<tr><td>切出查文档次数</td><td>3（输出目录 / 加速区差异 / 备案要求）</td><td>2（serve vs port / install 失败）</td><td>5+</td><td>几乎每步都查（小白视角）</td></tr>
+<tr><td>报错/误判次数</td><td>1 次「假成功」（部署成功但页面打不开）</td><td>1 次「形态错位」（拿到 URL 但是文件浏览器不是网页）</td><td>2 次（卡死 + 被推荐竞品）</td><td>0 次报错，但卡在"选源站类型 / 接入方式"</td></tr>
+<tr><td>主观挫败感（1–5）</td><td>1</td><td>3</td><td>5</td><td>2（流程通，概念门槛高）</td></tr>
+<tr><td>适合的用户画像</td><td>已有域名 + 知道加速区差异的前端开发者</td><td>临时 demo / 本地调试场景</td><td>SRE / 已有源站的运维</td><td>已懂 CDN/DNS 的运维或全栈</td></tr>
+</table>
+
+<h3>2.3 每条路径的「小白时刻」</h3>
+
+<h4 style="color:var(--accent); margin-top: 28px;">路径 A · EO Pages</h4>
+
+<div class="pain-point">
+<h4>卡点 #1 · Git 仓库默认搜根目录，子目录里的 HTML 静默不显示（"假成功"）</h4>
+<ul>
+<li><b>症状</b>：导入仓库后控制台显示「部署成功」，给了 <code>.edgeone.app</code> URL；点开是 404 / 空白页面</li>
+<li><b>根因</b>：Pages 默认把仓库根目录当成网站根目录；我的 <code>index.html</code> 在 <code>portfolio/</code> 子目录里，根目录什么都没有，平台仍然判断「部署成功」</li>
+<li><b>自救路径</b>：必须重新进项目设置，手动把「输出目录 / Root Directory」从 <code>/</code> 改成 <code>portfolio</code> 才行</li>
+<li><b>体感</b>：最割裂的一刻。部署绿灯亮起，但访问失败——产品没有任何主动提示是子目录的问题，我以为是自己 HTML 写错了，反复检查了十几分钟代码</li>
+</ul>
+<div class="screenshot-row">
+  <div class="screenshot">
+    <img src="assets/01-pages-404.png" alt="EdgeOne Pages 404 NOT_FOUND">
+    <div class="screenshot-cap">证据 1.1 · 部署成功后访问得到 404 NOT_FOUND——「假成功」最直观的截图</div>
+  </div>
+  <div class="screenshot">
+    <img src="assets/02-pages-build-config.png" alt="构建设置：根目录默认为 ./">
+    <div class="screenshot-cap">证据 1.2 · 构建设置中"根目录"默认为 <code>./</code>，没有任何提示告诉用户「如果代码在子目录里，这里要改」</div>
+  </div>
+</div>
+</div>
+
+<div class="pain-point">
+<h4>卡点 #2 · 加速区"三选一"在部署前只有后续自定义域名需要 ICP 备案介绍，默认选项国内访问不通</h4>
+<ul>
+<li><b>症状</b>：创建项目时让我选加速区——「全球可用区（不含中国大陆）/ 中国大陆可用区 / 全球可用区（含中国大陆）」三选一。三个选项之间的差异、各自要求、各自代价，在选择那一刻控制台只有简短解释</li>
+<li><b>后果</b>：默认选了第一个「全球可用区（含中国大陆）」，部署完成后才在某个角落提示「该区不覆盖中国大陆访问」——我转发给国内朋友打不开，又得返回控制台研究</li>
+<li><b>体感</b>：把「选择代价最大的那一步」埋在最早最不知情的时候。等我意识到 → 已经付出了沉没成本（部署 + 配置）→ 切换的代价比一开始知道更大</li>
+</ul>
+<div class="screenshot-row">
+  <div class="screenshot">
+    <img src="assets/03-pages-zone-notice.png" alt="加速区合规说明气泡">
+    <div class="screenshot-cap">证据 2.1 · 加速区合规说明在<b>部署完成后</b>才在域名管理页弹出——「3 小时预览有效期 / 中国大陆区返回 401」这种关键约束本应在<b>选择那一刻</b>就告知</div>
+  </div>
+  <div class="screenshot">
+    <img src="assets/04-pages-401.png" alt="EdgeOne Pages 401 UNAUTHORIZED">
+    <div class="screenshot-cap">证据 2.2 · 国内朋友访问时返回 401 UNAUTHORIZED——这是加速区前置告知缺失的最终结果</div>
+  </div>
+</div>
+<div class="insight"><b>需和导师同步的疑点</b>：做二次实验的时候，三个区都可以把预览转发给国内朋友打开——不理解是否为 bug。</div>
+</div>
+
+<h4 style="color:var(--accent); margin-top: 28px;">路径 B · EO Tunnel</h4>
+
+<div class="pain-point">
+<h4>卡点 #1 · 按官网步骤，URL 打开是文件浏览器不是网站</h4>
+<ul>
+<li><b>症状</b>：完全照官方文档操作——告诉 CodeBuddy 我本地项目的位置 → 让 CodeBuddy 阅读 tunnel 的 <code>skill.md</code> 并帮我内网上线这个项目 → 拿到一个 <code>.agent-tunnel.woa.com</code> URL → 浏览器打开看到的是一个漂亮的「All files」卡片列表，而不是我作品集的主页</li>
+<li><b>根因</b>：部署模式选错了——把「上线一个静态网站」当成了「分享一个项目目录」</li>
+</ul>
+
+<div class="screenshot">
+  <img src="assets/05-tunnel-doc.png" alt="Tunnel 官网：让 AI Agent 自行完成部署">
+  <div class="screenshot-cap">证据 3.1 · Tunnel 官网推荐路径："对 AI 说一句话，它帮你安装 tunneleo、启动服务、生成链接，全程无需手动操作"——但实际跑出来的并不是用户期待的"网站上线"</div>
+</div>
+
+<p><b>根因简述</b>：tunneleo 提供 <code>serve</code>（文件分享）和 <code>port</code>（端口转发）两种语义不同的能力，但 SKILL.md 把它们并列写在一起、没有显式区分。Agent 默认匹配最显眼的 <code>serve</code> 例子，于是「上线网站」的意图被翻译成了「文件浏览器」。</p>
+
+<div class="screenshot-row">
+  <div class="screenshot">
+    <img src="assets/06-tunnel-allfiles.png" alt="tunneleo 跑出来的 All files 文件浏览器">
+    <div class="screenshot-cap">证据 3.2 · 实际拿到的：tunneleo 自带的「All files」文件浏览器界面</div>
+  </div>
+  <div class="screenshot">
+    <img src="assets/07-portfolio-expected.png" alt="期望的作品集主页">
+    <div class="screenshot-cap">证据 3.3 · 期望的：作品集主页直接打开</div>
+  </div>
+</div>
+
+<div class="right-way">
+<h5>✓ 正确做法（亲跑验证可行）</h5>
+<pre><code>cd /path/to/portfolio          # 1. 进入作品集目录
+python3 -m http.server 8080    # 2. 起一个标准静态服务器（根路径自动指向 index.html）
+tunneleo port 8080             # 3. 把这个本地服务暴露成内网 URL</code></pre>
+<p style="margin: 8px 0 0; font-size: 13px;">浏览器打开拿到的 URL → 直接进入作品集首页 → 项目卡片正常跳转 → 图片资源全部正常加载。</p>
+</div>
+
+<p style="margin-top: 12px;"><b>体感</b>：一脸懵。我做了文档让我做的事，结果跟我期待的不一样——卡点不在动作执行层，而在「动作 → 最终视图」这一段缺失的预期管理。<i>对应建议见 01 章 #1（官网 prompt 区分场景）和 #2（SKILL.md 加最终视图）。</i></p>
+</div>
+
+<h4 style="color:var(--accent); margin-top: 28px;">路径 C · Skill + AI</h4>
+
+<p><b>点评</b>：这是一份给已经在云上有域名 + 有源站的运维人员用的「接入加速 / 安全运营 / 看日志」工具包，而不是给开发者把本地项目部署上线的工具包。</p>
+
+<div class="insight">
+<b>SKILL.md 的「自我描述」与「实际内容」出现明显错位</b>（这也是后面卡点的最大原因）。<br>
+<code>skills/tencent-edgeone-skill/SKILL.md</code> 的 frontmatter 原文：
+<pre style="margin: 8px 0;"><code>description: A comprehensive skill for Tencent EdgeOne ... covering edge acceleration
+  (DNS, certificates, caching, rule engine, L4 proxy, load balancing), edge security
+  (DDoS protection, Web protection, Bot management), edge media (real-time video /
+  image processing), edge development (Edge Functions, EdgeOne Pages), and more.</code></pre>
+description 白纸黑字写了 <b>Edge Functions, EdgeOne Pages</b>，但 <code>references/</code> 目录下只有 4 个模块：
+<pre style="margin: 8px 0;"><code>references/
+├── acceleration/   ← 只有 cache-purge / cert-manager / zone-onboarding
+├── api/
+├── observability/
+└── security/</code></pre>
+<b>没有 pages/ 目录、没有 edge-functions/ 目录、没有 deploy/ 目录、没有 framework/ 目录。</b><br>
+这是优化建议中所有问题里证据最硬、影响面最大的一条——SKILL 在描述层「承诺」了 Pages 和 Edge Functions，在实现层完全没交付。
+</div>
+
+<div class="pain-point">
+<h4>卡点 #1 · 本地 deploy_folder 卡死</h4>
+<ul>
+<li><b>症状</b>：看起来对话很流畅、Skill 知道自己在干什么、OAuth 走完了，但永远拿不到那个 <code>*.edgeone.app</code> 链接。每一次失败都「换一种语言」：上传卡住 → cancel → 缺环境变量 → 推荐你去用 Vercel。每一次错误信息都像是一个新问题，无法形成有效的诊断路径。没有任何环节告诉我「出了什么、可以怎么自救、控制台是兜底」——失败是沉默的</li>
+<li><b>根因</b>：上面所提到 SKILL 现在 100% 围绕 <code>tccli</code>（运维侧 API）展开，对官方真正面向开发者的 <code>edgeone</code> CLI（部署侧）完全没引入。这是 SKILL 当前最大的能力漏洞</li>
+</ul>
+</div>
+
+<div class="pain-point">
+<h4>卡点 #2 · CodeBuddy 最终推荐了竞品产品</h4>
+<ul>
+<li><b>症状</b>：在多次 <code>deploy_folder</code> 卡死后，CodeBuddy 给出了「建议使用竞品」的建议</li>
+<li><b>根因</b>：CodeBuddy 拿到错误后没有「问用户 → 控制台兜底 → CLI 兜底」的三档自愈逻辑，直接把锅甩给用户，并越界推荐了竞品。<b>缺失的产品红线</b>：没有任何地方写过「Agent 不得在 EdgeOne 部署失败时建议非腾讯云的部署平台」——这是一条没人写但绝对不该被越过的线</li>
+</ul>
+<div class="screenshot">
+  <img src="assets/08-codebuddy-competitor.png" alt="CodeBuddy 推荐 GitHub Pages / Vercel / Netlify">
+  <div class="screenshot-cap">证据 4 · CodeBuddy 在 Pages 部署失败后明文建议「使用 GitHub Pages 部署（免费）」「或使用 Vercel/Netlify 等平台一键部署」（红框处）——这是越过产品红线的直接证据</div>
+</div>
+</div>
+
+<div class="insight">
+<b>整体体感</b>：流畅的开场 → 卡顿的中段 → 自我怀疑 → 失望 → 转向竞品。所有的体验崩点都在最后 30%。<br>
+<i>对应建议见 01 章 #3（兜底策略）和 #6（两个团队 Skill 合并）。</i>
+</div>
+
+<h4 style="color:var(--accent); margin-top: 28px;">路径 D · 传统控制台流程（站点接入加速）</h4>
+
+<p><b>实验设置差异</b>：路径 A/B/C 都是「我有一份本地代码想上线」场景；路径 D 是另一个场景——「<b>我已有源站/域名，想接入 EO 加速</b>」。两个场景互补，本周后期补做。</p>
+
+<div class="pain-point">
+<h4>卡点 · 流程完整，但每一步都是专业概念，小白难以自驱</h4>
+<ul>
+<li><b>症状</b>：传统链路可以完整覆盖<code>添加站点 → 添加加速域名 → 配置源站 → DNS/CNAME → HTTPS → 缓存 → 安全防护</code>，每一步控制台都给了入口、文档也都齐全。但<b>每一步都涉及专业概念</b>——「源站类型应该选什么？」「DNS 改在哪儿？」「HTTPS 证书要不要 EO 托管？」这些选择题在没有先验经验时无法靠产品自身引导自救</li>
+<li><b>根因</b>：控制台是按"<b>能力组织</b>"——把所有功能模块平铺出来让用户自己组装；不是按"<b>用户目标组织</b>"——按"我想做 X"提供端到端的路径模板</li>
+<li><b>对比</b>：Cloudflare、Vercel 在引导上的差别不是"流程更短"，而是"<b>问对问题</b>"——它们一上来就问"你想接入什么类型的源/项目？"，剩下的选项隐藏在场景模板里</li>
+</ul>
+
+<div class="insight">
+<b>关键洞察</b>：
+<ul style="margin: 8px 0;">
+<li>这条路径<b>反证了一个判断</b>：「前置告知缺失」不是 Agent 时代独有的问题——即使在传统控制台流程里，小白用户同样需要按目标的路径模板。Agent 时代之所以让这个问题显形，是因为 Agent 替用户做选择时这些"选择题"全部裸露出来</li>
+<li>所以解法不是"为 Agent 单做一套引导"，而是<b>同一套场景模板既写进控制台、又写进 <code>llms.txt</code></b>——人类用户和 Agent 同时受益（与 04 章 GEO「可理解 / 可发现」联动）</li>
+<li><b>用户的真实声音</b>：即使我已经在控制台流程里了，比起翻文档解决问题，我也更倾向于直接问 Agent。这正是产品组该警觉的信号——文档投入再大，用户已经不去那里找答案了</li>
+</ul>
+</div>
+
+<p><b>建议的 5 类场景化路径模板</b>（已上 01 章 #7）：</p>
+<ol>
+<li>我有 GitHub 静态项目 → 推荐 EdgeOne Pages</li>
+<li>我有 COS 静态网站 → 推荐源站接 COS + 加速域名</li>
+<li>我有 CVM 后端服务 → 推荐源站接 CVM + 配置 HTTPS/缓存</li>
+<li>我有本地服务想临时暴露 → 推荐 Tunnel</li>
+<li>我已有线上域名想接入加速 → 推荐站点接入 + DNS/CNAME 一步到位</li>
+</ol>
+</div>
+
+<h3>2.4 阶段性总结</h3>
+<ul>
+<li><b>最快拿到 URL</b>：Tunnel（5 分钟内）。原因：纯本地启动，不涉及云端构建和域名</li>
+<li><b>最适合长期对外</b>：Pages。原因：内容存云端、自动 CDN、关机不影响——但前提是已经懂加速区差异 + 已经有备案过的域名</li>
+<li><b>最容易劝退</b>：<b>Skill + AI</b>。原因：SKILL 描述层承诺了 Pages/Edge Functions 但实现层未交付，Agent 在多次失败后越界推荐竞品——这是本周四条路径中唯一彻底没拿到 URL 的一条</li>
+<li><b>最被错配的预期</b>：Tunnel。原因：文档把动作写清了，但没把「用户最终看到什么」写出来，导致按文档执行依然懵</li>
+<li><b>最考验小白先验经验</b>：<b>传统控制台流程</b>。原因：流程完整、文档齐全，但按"能力"组织而非按"用户目标"组织，每一步都是选择题——这条对小白用户最不友好，反向证明「按场景组织」是产品该补的能力</li>
+</ul>
+
+<h2>03　Agent 时代的 B 端 user journey 重构</h2>
+
+<div class="screenshot" style="margin: 18px 0;">
+  <img src="assets/10-agent-control-handover.png" alt="传统旅程 → Agent 旅程 → 新设计重点；以及风险等级四档分层接管">
+  <div class="screenshot-cap">图 · 从「用户逐步操作」到「用户表达目标 + Agent 拆解执行」——新设计重点是控制权如何下放、风险节点如何收回</div>
+</div>
+
+<h3>3.1 观察到的变化</h3>
+<p>Agent 让 B 端用户旅程从「<b>用户逐步操作产品</b>」变成「<b>用户表达目标，Agent 代为拆解和执行</b>」。</p>
+
+<h3>3.2 暴露的问题</h3>
+<p>控制权下放后，用户不再只关心 Agent 能不能完成任务，还会关心：</p>
+<ul>
+<li>Agent 是否理解真实业务语境？</li>
+<li>Agent 是否会越权执行？</li>
+<li>Agent 是否会影响生产环境？</li>
+<li>Agent 出错后是否可回滚、可追责？</li>
+</ul>
+
+<h3>3.3 对应的产品解法</h3>
+<p>B 端 Agent 不应默认全自动，而应设计<b>分层接管机制</b>：</p>
+<table>
+<tr><th>风险等级</th><th>Agent 接管方式</th><th>产品设计要求</th></tr>
+<tr><td>低风险</td><td>自动执行</td><td>执行后留痕</td></tr>
+<tr><td>状态变更</td><td>用户确认后执行</td><td>展示操作计划和影响范围</td></tr>
+<tr><td>高风险</td><td>强确认后执行</td><td>展示风险、权限、成本和回滚方案</td></tr>
+<tr><td>不可逆 / 敏感操作</td><td>禁止自动执行</td><td>只允许建议、模拟或生成草稿</td></tr>
+</table>
+
+<h3>3.4 结论</h3>
+<blockquote>
+B 端 Agent 产品的关键，不是简单缩短用户路径，而是设计一套「<b>可下放、可确认、可收回</b>」的控制权机制。
+</blockquote>
+<p>EdgeOne Skill 基本遵循「<b>可控委托</b>」原则：低风险查询和分析可自动执行，涉及状态变更和高风险操作时要求用户确认；但仍可在<b>统一风险分级、回滚提示和审计追踪</b>上进一步增强。</p>
+
+<h2>04　如何让 Agent 们更好地发现或推荐 EO（本质 GEO）</h2>
+
+<blockquote style="font-size: 15px; font-weight: 500; border-left-color: var(--accent);">
+让 Agent 推荐 EO，不是让它"看见广告"，而是让它在解决用户任务时，能判断 EO 是一个<b>可信、适合、可执行</b>的选项。
+</blockquote>
+
+<div class="screenshot" style="margin: 18px 0;">
+  <img src="assets/09-geo-framework.png" alt="GEO 五件事框架图：可发现 / 可理解 / 可比较 → Agent 判断 → 可验证 / 可调用 → 被推荐">
+  <div class="screenshot-cap">图 · 让 Agent 发现并推荐 EO 的五件事——可发现 / 可理解 / 可比较 → Agent 判断 → 可验证 / 可调用 → 被推荐</div>
+</div>
+
+<h3>具体做 5 件事 + EO 当前现状对照</h3>
+<table>
+<tr><th>维度</th><th>EO 应该做的</th><th>EO 当前现状</th></tr>
+<tr><td><b>可发现</b></td><td>加 <code>llms.txt</code> / <code>llms-full.txt</code> / sitemap / Markdown 版本，让 Agent 抓到干净结构化内容</td><td>❌ 暂无</td></tr>
+<tr><td><b>可理解</b></td><td>不要只写"边缘安全、全球加速"，要写清楚"<b>什么场景用什么工具</b>"</td><td>⚠️ 当前更多是"边缘安全 / 全球加速"这类宏大叙事</td></tr>
+<tr><td><b>可比较</b></td><td>主动提供 EO vs Vercel / Cloudflare / Netlify 的差异页，让 Agent 知道<b>什么时候</b>该推荐 EO</td><td>❌ 暂无</td></tr>
+<tr><td><b>可验证</b></td><td>放真实案例、数据、限制条件、FAQ 排障，<b>减少 AI 幻觉</b></td><td>⚠️ 部分已有，但分散在帮助中心多层目录</td></tr>
+<tr><td><b>可调用</b></td><td>把 CLI、MCP、SDK、API 示例写成 <b>Agent 可直接执行的步骤</b></td><td>✅ 三类能力齐备（CLI/MCP/SDK），但 SKILL.md 未引入开发者侧 CLI</td></tr>
+</table>
+<p style="color: var(--muted); font-size: 13px;"><i>5 件事中"可发现 / 可验证"的最小起点已沉淀为 01 章 #4（<code>llms.txt</code> + 错误码字典）；"可理解"的场景化表达已沉淀为 01 章 #7（5 类路径模板）。</i></p>
+
+<h2>05　友商对比</h2>
+
+<h3>5.1 友商进展（截至 2026-05-13）</h3>
+<table>
+<tr><th>友商</th><th>关键产品</th><th>Agent 接入姿势</th><th>对 EO 的判断</th></tr>
+<tr><td><b>Cloudflare</b></td><td>Workers + Pages + Agents SDK + AI Gateway + 官方 MCP</td><td><code>wrangler</code> + Agents SDK + <a href="https://blog.cloudflare.com/code-mode-mcp">官方 MCP（Code Mode，2500 endpoints/1k tokens）</a></td><td>Agent 时代最激进的对标；EO 在三类接入能力上已与之对齐（详见下方"EO 现状"），主要差距是<b>覆盖面与组织方式</b>——Cloudflare 用一份 MCP 覆盖全部 2500 个 API，EO 的 CLI/MCP 当前主要面向 Pages 场景</td></tr>
+<tr><td><b>Vercel</b></td><td>Vercel + v0 + AI SDK</td><td><code>vercel deploy</code> + <a href="https://vercel.com/blog/introducing-the-new-v0">v0</a> + <a href="https://vercel.com/kb/guide/how-to-build-ai-agents-with-vercel-and-the-ai-sdk">AI SDK</a></td><td>「AI 辅助开发→部署」闭环做深，与 Pages 直接对标</td></tr>
+<tr><td><b>Netlify</b></td><td>Netlify + AI Functions + Codex Plugin</td><td><code>netlify</code> CLI + <a href="https://chatforest.com/reviews/netlify-mcp-server/">官方 MCP</a> + <a href="https://www.netlify.com/changelog/2026-03-27-deploy-from-codex-netlify-plugin/">Deploy from Codex（2026-03-27）</a></td><td>2026 Q1 把 Agent 接入做扎实，对 EO 是直接威胁</td></tr>
+<tr><td>Fastly</td><td>Compute@Edge</td><td><code>fastly</code> CLI</td><td>工程师向，小白门槛高</td></tr>
+<tr><td>Akamai</td><td>EdgeWorkers</td><td>有 CLI 但 Agent 叙事几乎没有</td><td>最传统、最企业向</td></tr>
+<tr><td>阿里云</td><td>ENS / CDN / DCDN</td><td>通义 + 一体化云</td><td>「AI 一体化云」路线</td></tr>
+<tr><td>火山引擎</td><td>CDN / 边缘计算</td><td>豆包 + 一体化</td><td>同阿里路线</td></tr>
+</table>
+
+<div class="insight" style="margin-top: 16px;">
+<b>EO 现状（事实陈述）</b>：EdgeOne 已具备 <b>CLI、MCP 和 SDK</b> 三类开发者接入能力——
+<ul style="margin: 6px 0;">
+<li><b>CLI / MCP</b>：主要服务于 EdgeOne Pages 的开发与部署场景</li>
+<li><b>SDK</b>：依托腾讯云 API 3.0 体系，以 <code>teo</code> 服务形式覆盖站点、域名、缓存、安全、函数、KV 等 API 管理能力</li>
+</ul>
+<b>对照本周亲跑的结果</b>：能力齐备 ≠ Agent 能用上——路径 C 的卡点根源不在"EO 缺 CLI"，而在 <code>tencent-edgeone-skill</code> 的 SKILL.md 当前 100% 围绕 <code>tccli</code>（运维侧）展开，<b>没有把面向 Pages 的开发者侧 CLI 与 MCP 引入到 Skill 的 references/ 里</b>，导致 Agent 在调用时拿不到正确入口。这是<b>"已有能力 vs 已被 Agent 用上"之间的最后一公里</b>。
+</div>
+
+<h3>5.2 EO 差异化机会</h3>
+<ol>
+<li><b>把 Skill 范式做深做厚</b>——海外没人走完（Cloudflare 选了 MCP、Vercel 选了 v0），是真正的窗口</li>
+</ol>
+
+<h2>结语</h2>
+<blockquote style="border-left-color: var(--accent); margin: 16px 0;">
+这份报告的所有判断都来自一周内对四条路径的亲跑，不来自二手资料；所有建议都从这些路径的具体卡点抽离而来，不来自抽象推演。
+</blockquote>
+
+<h2>附录</h2>
+
+<h3>A. 友商资料原始引用</h3>
+<table>
+<tr><th>来源</th><th>标题</th><th>链接</th></tr>
+<tr><td>Cloudflare Blog</td><td>Code Mode: give agents an entire API in 1,000 tokens</td><td><a href="https://blog.cloudflare.com/code-mode-mcp">链接</a></td></tr>
+<tr><td>Cloudflare Docs</td><td>Build a Remote MCP server</td><td><a href="https://developer.cloudflare.com/agents/guides/remote-mcp-server/">链接</a></td></tr>
+<tr><td>Vercel Blog</td><td>Introducing the new v0</td><td><a href="https://vercel.com/blog/introducing-the-new-v0">链接</a></td></tr>
+<tr><td>Vercel KB</td><td>How to build AI Agents with Vercel and the AI SDK</td><td><a href="https://vercel.com/kb/guide/how-to-build-ai-agents-with-vercel-and-the-ai-sdk">链接</a></td></tr>
+<tr><td>Netlify Changelog</td><td>Deploy from Codex with the Netlify Plugin</td><td><a href="https://www.netlify.com/changelog/2026-03-27-deploy-from-codex-netlify-plugin/">链接</a></td></tr>
+<tr><td>ChatForest</td><td>Netlify MCP Server Review</td><td><a href="https://chatforest.com/reviews/netlify-mcp-server/">链接</a></td></tr>
+</table>
+
+<h3>B. 写作纪律自审</h3>
+<ol>
+<li>✅ 每个观点后挂证据：截图 / 数据 / 链接</li>
+<li>✅ 措辞禁用清单（「我感觉/可能/也许/应该会/大概率」）已全部清理</li>
+<li>✅ 倒金字塔：每段第一句话能独立成立</li>
+</ol>
+
+<h3>C. 旁路项目：CDN 行业洞察 Agent</h3>
+<ul>
+<li><b>工作流</b>：信号源 → 二次验证 → 标签化 → 三段式归并报告（事实 / 推论 / 对 EO 的含义）</li>
+<li><b>体感</b>：最大的价值不是「比人快」，而是「比人持续」——每天都跑，不会因为忙而漏看</li>
+<li><b>明天就能做</b>：把这个 Agent 的输出接入产品组飞书/企微群，每天早 9 点同步昨日友商动态</li>
+<li><b>下个季度可以做</b>：做成 EO 内部产品，让 SA、产品、研发、技术品牌从同一个事实底座出发</li>
+</ul>
+
+</div>
+</body>
+</html>
